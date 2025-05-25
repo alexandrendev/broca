@@ -2,11 +2,27 @@
 
 package core {
   package entity {
-    class Entidade
+    package equation{
+        interface Equation
+        class Rafikov
+    }
+
+    package interval{
+        class Interval
+        enum Effect
+    }
+
+    package population{
+        class Individual
+    }
   }
+
+    package ports{
+        class RandomGenerator
+    }
+
   package usecase {
-    interface UseCase
-    class UseCaseImpl
+    class SolveEquationUseCase
   }
 }
 
@@ -17,9 +33,5 @@ package infra {
 }
 
 core.usecase ..> core.entity : usa
-infra.Factory ..> core.entity : cria
-infra.Factory ..> core.usecase.UseCase : cria
-infra.Controller ..> core.usecase.UseCase : chama
-infra.RepositoryImpl ..|> core.usecase.gateway : implementa
 
 @enduml
