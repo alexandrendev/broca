@@ -35,9 +35,9 @@ public class Individual {
     }
 
 
-    public Individual(int initialPopulation, int currentPopulation, RandomGenerator random) {
+    public Individual(int initialPopulation, RandomGenerator random) {
         this.initialPopulation = initialPopulation;
-        this.currentPopulation = currentPopulation;
+        this.currentPopulation = initialPopulation;
         this.random = random;
     }
 
