@@ -1,0 +1,25 @@
+@startuml
+
+package core {
+  package entity {
+    class Entidade
+  }
+  package usecase {
+    interface UseCase
+    class UseCaseImpl
+  }
+}
+
+package infra {
+  class Factory
+  class RepositoryImpl
+  class Controller
+}
+
+core.usecase ..> core.entity : usa
+infra.Factory ..> core.entity : cria
+infra.Factory ..> core.usecase.UseCase : cria
+infra.Controller ..> core.usecase.UseCase : chama
+infra.RepositoryImpl ..|> core.usecase.gateway : implementa
+
+@enduml
