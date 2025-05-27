@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rafikov implements Equation {
-    public double n1, r, beta, m2, n2, m3, K, gamma;
+    public double n1, r, m2, n2, m3, K, gamma, beta;
 
     @Override
-    public List<Interval> getFirstLineIntervals(PopulationData data) {
+    public List<Interval> getFirstLineIntervals(PopulationData data, double dailyBeta) {
         int H = data.hosts();
         int P = data.parasitoids();
 
         double term1 = r * (1 -H / K);
         double term2 = n1 * H;
-        double term3 = beta * H * P;
+        double term3 = dailyBeta * H * P;
 
         List<Interval> values = new ArrayList<>();
         values.add(new Interval(term1, Effect.LIVE));
@@ -30,12 +30,12 @@ public class Rafikov implements Equation {
     }
 
     @Override
-    public List<Interval> getSecondLineIntervals(PopulationData data) {
+    public List<Interval> getSecondLineIntervals(PopulationData data, double dailyBeta) {
         int H = data.hosts();
         int I = data.infecteds();
         int P = data.parasitoids();
 
-        double term1 = beta * H * P;
+        double term1 = dailyBeta * H * P;
         double term2 = m2 * I;
         double term3 = n2 * I;
 
@@ -95,78 +95,47 @@ public class Rafikov implements Equation {
         return normalizedAndSorted;
     }
 
-    public Rafikov(double n1, double r, double beta, double m2, double n2, double m3, double k, double gamma) {
+    public Rafikov(double n1, double r, double m2, double n2, double m3, double k, double gamma, double beta) {
         this.n1 = n1;
         this.r = r;
-        this.beta = beta;
         this.m2 = m2;
         this.n2 = n2;
         this.m3 = m3;
         K = k;
         this.gamma = gamma;
+        this.beta = beta;
     }
 
     public double getN1() {
         return n1;
     }
 
-    public void setN1(double n1) {
-        this.n1 = n1;
-    }
-
     public double getR() {
         return r;
-    }
-
-    public void setR(double r) {
-        this.r = r;
-    }
-
-    public double getBeta() {
-        return beta;
-    }
-
-    public void setBeta(double beta) {
-        this.beta = beta;
     }
 
     public double getM2() {
         return m2;
     }
 
-    public void setM2(double m2) {
-        this.m2 = m2;
-    }
-
     public double getN2() {
         return n2;
-    }
-
-    public void setN2(double n2) {
-        this.n2 = n2;
     }
 
     public double getM3() {
         return m3;
     }
 
-    public void setM3(double m3) {
-        this.m3 = m3;
-    }
-
     public double getK() {
         return K;
-    }
-
-    public void setK(double k) {
-        K = k;
     }
 
     public double getGamma() {
         return gamma;
     }
 
-    public void setGamma(double gamma) {
-        this.gamma = gamma;
+    public double getBeta() {
+        return beta;
     }
+
 }

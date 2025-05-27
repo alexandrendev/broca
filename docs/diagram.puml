@@ -1,11 +1,22 @@
 @startuml
 
+package controller{
+    class SimulationController
+}
+
 package core {
+
   package entity {
+
+    package day{
+      class DailySimulationData
+    }
+
     package equation{
         interface Equation
         class Rafikov
     }
+
 
     package interval{
         class Interval
@@ -14,11 +25,13 @@ package core {
 
     package population{
         class Individual
+        class PopulationData
     }
   }
 
     package ports{
-        class RandomGenerator
+        interface RandomGenerator
+        interface DailySimulationDataRepository
     }
 
   package usecase {
@@ -27,9 +40,17 @@ package core {
 }
 
 package infra {
-  class Factory
-  class RepositoryImpl
-  class Controller
+
+  package random{
+    class RandomProvider
+  }
+
+  package repository{
+    class DailySimulationDataCsvRepository
+  }
+
+  class EquationFactory
+  enum Equilibrium
 }
 
 core.usecase ..> core.entity : usa

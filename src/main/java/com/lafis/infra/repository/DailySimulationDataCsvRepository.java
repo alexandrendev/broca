@@ -42,7 +42,7 @@ public class DailySimulationDataCsvRepository implements DailySimulationDataRepo
             throw new IllegalStateException("Repository not initialized. Call initialize() first.");
         }
         try {
-            csvPrinter.printRecord(data.hosts(), data.infected(), data.parasitoid());
+            csvPrinter.printRecord(data.date().toString(), data.hosts(), data.infected(), data.parasitoid());
             csvPrinter.flush();
         } catch (IOException e) {
             throw new RuntimeException("Error appending data to CSV for " + fileName + ": " + e.getMessage(), e);

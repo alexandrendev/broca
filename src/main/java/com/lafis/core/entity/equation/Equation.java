@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface Equation {
 
-    List<Interval> getFirstLineIntervals(PopulationData data);
-    List<Interval> getSecondLineIntervals(PopulationData data);
+    List<Interval> getFirstLineIntervals(PopulationData data, double dailyBeta);
+    List<Interval> getSecondLineIntervals(PopulationData data, double dailyBeta);
     List<Interval> getThirdLineIntervals(PopulationData data);
+
+    double getBeta();
 }
