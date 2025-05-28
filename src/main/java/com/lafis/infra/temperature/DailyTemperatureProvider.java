@@ -35,8 +35,8 @@ public class DailyTemperatureProvider implements DailyTemperatureReader {
             for (CSVRecord record : parser) {
                 try {
                     LocalDate date = LocalDate.parse(record.get("Dia"), DATE_FORMATTER);
-                    double maxTemp = Double.parseDouble(record.get("Temperatura Máxima (C)").replace(',', '.'));
-                    double temperature = Double.parseDouble(record.get("Temperatura Média (C)").replace(',', '.'));
+                    double maxTemp = Double.parseDouble(record.get("Temperatura Máxima (C)"));
+                    double temperature = Double.parseDouble(record.get("Temperatura Média (C)"));
 
                     DailyTemperatureData data = new DailyTemperatureData(date, maxTemp, temperature);
                     temperaturesByDate.put(date, data);

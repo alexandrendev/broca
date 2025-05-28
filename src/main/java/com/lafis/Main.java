@@ -2,10 +2,12 @@ package com.lafis;
 
 import com.lafis.controller.SimulationController;
 import com.lafis.core.entity.population.PopulationData;
+import com.lafis.core.usecase.PlotChartUseCase;
 import com.lafis.core.usecase.RunSimulationUseCase;
 import com.lafis.infra.BetaProvider;
 import com.lafis.infra.EquationFactory;
 import com.lafis.infra.Equilibrium;
+import com.lafis.infra.chart.ChartProvider;
 import com.lafis.infra.random.RandomProvider;
 import com.lafis.infra.repository.DailySimulationDataCsvRepository;
 import com.lafis.infra.temperature.DailyTemperatureProvider;
@@ -20,6 +22,7 @@ public class Main {
         DailySimulationDataCsvRepository repository;
         BetaProvider betaProvider = new BetaProvider();
 
+        String fileName = "temp_THIRD_EQ";
 
         try {
             repository = new DailySimulationDataCsvRepository();
@@ -28,17 +31,23 @@ public class Main {
         }
 
         RunSimulationUseCase runSimulationUseCase = new RunSimulationUseCase(
-                EquationFactory.create(Equilibrium.SECOND),
+                EquationFactory.create(Equilibrium.THIRD),
                 randomProvider,
                 repository,
                 betaProvider
         );
-        SimulationController controller = new SimulationController(runSimulationUseCase);
+
+        ChartProvider chartProvider = new ChartProvider();
+
+        PlotChartUseCase plotChartUseCase = new PlotChartUseCase(chartProvider , repository);
+        SimulationController controller = new SimulationController(runSimulationUseCase , plotChartUseCase);
 
         DailyTemperatureProvider temperatureProvider = new DailyTemperatureProvider();
         String dailyTemperatureFilePath = "input/input.txt";
 
-        controller.runSimulation(data, "equilibrio-2-temp", temperatureProvider, dailyTemperatureFilePath);
+        controller.runSimulation(data, fileName, temperatureProvider, dailyTemperatureFilePath);
+
+        controller.plotChart(fileName);
 
     }
 }

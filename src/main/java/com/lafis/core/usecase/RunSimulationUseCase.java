@@ -36,7 +36,7 @@ public class RunSimulationUseCase {
         LocalDate start = LocalDate.of(2024, 1, 1);
         LocalDate end = LocalDate.of(2024, 12, 31);
 
-        dailyDataRepository.initialize(simulationIdentifier);
+        dailyDataRepository.initialize(simulationIdentifier, true);
         for(LocalDate day = start; day.isBefore(end); day = day.plusDays(1)) {
             PopulationData currentPopSnapshot = new PopulationData(
                     host.getCurrentPopulation(),
@@ -67,6 +67,8 @@ public class RunSimulationUseCase {
             infected.monteCarlo(secondLineInterval);
             parasitoid.monteCarlo(thirdLineInterval);
         }
+
+        dailyDataRepository.close();
     }
 
     public RunSimulationUseCase(Equation equation, RandomGenerator randomGenerator, DailySimulationDataRepository dailyDataRepository, BetaCalculator betaCalculator) {

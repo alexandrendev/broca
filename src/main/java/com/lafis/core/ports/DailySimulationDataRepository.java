@@ -10,7 +10,9 @@ public interface DailySimulationDataRepository {
 
     void saveAll(List<DailySimulationData> data);
 
-    void initialize(String fileName);
+    void initialize(String fileName, boolean append);
+
+    List<DailySimulationData> getData();
 
     void close();
 }

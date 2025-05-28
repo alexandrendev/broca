@@ -2,11 +2,12 @@ package com.lafis.controller;
 
 import com.lafis.core.entity.population.PopulationData;
 import com.lafis.core.ports.DailyTemperatureReader;
+import com.lafis.core.usecase.PlotChartUseCase;
 import com.lafis.core.usecase.RunSimulationUseCase;
-import com.lafis.infra.random.RandomProvider;
 
 public class SimulationController {
     private RunSimulationUseCase runSimulationUseCase;
+    private PlotChartUseCase plotChartUseCase;
 
     public void runSimulation(PopulationData populationData,
                               String simulationIdentifier,
@@ -16,7 +17,12 @@ public class SimulationController {
         runSimulationUseCase.execute(populationData, simulationIdentifier, dailyTemperatureReader, dailyTemperatureFilePath);
     }
 
-    public SimulationController(RunSimulationUseCase runSimulationUseCase) {
+    public void plotChart(String fileName) {
+        plotChartUseCase.execute(fileName);
+    }
+
+    public SimulationController(RunSimulationUseCase runSimulationUseCase, PlotChartUseCase plotChartUseCase) {
         this.runSimulationUseCase = runSimulationUseCase;
+        this.plotChartUseCase = plotChartUseCase;
     }
 }
