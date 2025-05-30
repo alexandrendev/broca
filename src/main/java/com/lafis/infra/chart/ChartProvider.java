@@ -5,7 +5,9 @@ import com.lafis.core.ports.ChartPlotter;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 import java.io.IOException;
 import java.time.ZoneId;
@@ -52,16 +54,15 @@ public class ChartProvider implements ChartPlotter {
         chart.getStyler().setDatePattern("dd-MM-yyyy");
         chart.getStyler().setXAxisLabelRotation(45);
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
-//        chart.getStyler().setToolTipsEnabled(true);
         chart.getStyler().setChartTitleVisible(true);
         chart.getStyler().setAxisTitlesVisible(true);
         chart.getStyler().setLegendVisible(true);
         chart.getStyler().setPlotGridLinesVisible(true);
 
 
-        chart.addSeries("Broca", dates, hostPopulation);
-        chart.addSeries("Broca infectada", dates, infectedPopulation);
-        chart.addSeries("Parasitoid", dates, parasitoidPopulation);
+        chart.addSeries("Broca", dates, hostPopulation).setMarker(SeriesMarkers.NONE);
+        chart.addSeries("Broca infectada", dates, infectedPopulation).setMarker(SeriesMarkers.NONE);
+        chart.addSeries("Parasitoid", dates, parasitoidPopulation).setMarker(SeriesMarkers.NONE);
 
 
         String filePath = "./output/dinamica_populacional.png";
