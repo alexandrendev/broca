@@ -5,14 +5,14 @@ import com.lafis.core.ports.RandomGenerator;
 import java.util.Random;
 
 public class RandomProvider implements RandomGenerator {
-    private Random random;
+//    private Random random;
 
     @Override
     public double nextDouble() {
-        return random.nextDouble();
+        return Math.random();
     }
 
-    public RandomProvider(Random random) {
-        this.random = random;
+    public RandomProvider() {
+
     }
 }

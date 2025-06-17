@@ -12,6 +12,7 @@ import com.lafis.core.ports.DailyTemperatureReader;
 import com.lafis.core.ports.RandomGenerator;
 
 import java.time.LocalDate;
+import java.time.MonthDay;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ public class RunSimulationUseCase {
 
             dailyDataRepository.append(dailyRecord);
 
+
             double maxTemperature = dailyTemperatureDataMap.get(day).maxTemperature();
             double temperature = dailyTemperatureDataMap.get(day).temperature();
 
@@ -60,12 +62,17 @@ public class RunSimulationUseCase {
             double calculatedBeta = this.betaCalculator.calculateBeta(equation.getBeta(), temperature, maxTemperature);
 
             List<Interval> firstLineInterval = equation.getFirstLineIntervals(currentPopSnapshot, calculatedBeta);
-            List<Interval> secondLineInterval = equation.getSecondLineIntervals(currentPopSnapshot, calculatedBeta);
-            List<Interval> thirdLineInterval = equation.getThirdLineIntervals(currentPopSnapshot);
+            int infectedUpdate = host.monteCarlo(firstLineInterval);
 
-            host.monteCarlo(firstLineInterval);
-            infected.monteCarlo(secondLineInterval);
+            List<Interval> secondLineInterval = equation.getSecondLineIntervals(currentPopSnapshot, calculatedBeta);
+            int parasitoidUpdate = infected.monteCarlo(secondLineInterval);
+
+            List<Interval> thirdLineInterval = equation.getThirdLineIntervals(currentPopSnapshot);
             parasitoid.monteCarlo(thirdLineInterval);
+
+            infected.updateCurrentPopulation(infectedUpdate);
+            parasitoid.updateCurrentPopulation(parasitoidUpdate);
+
         }
 
         dailyDataRepository.close();

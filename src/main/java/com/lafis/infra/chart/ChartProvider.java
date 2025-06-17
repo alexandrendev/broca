@@ -3,6 +3,7 @@ package com.lafis.infra.chart;
 import com.lafis.core.entity.day.DailySimulationData;
 import com.lafis.core.ports.ChartPlotter;
 import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.internal.series.MarkerSeries;
@@ -43,8 +44,8 @@ public class ChartProvider implements ChartPlotter {
 
 
         XYChart chart = new XYChartBuilder()
-                .width(800)
-                .height(600)
+                .width(1920)
+                .height(1080)
                 .title("Dinâmica Populacional ao longo do ano")
                 .xAxisTitle("Dia")
                 .yAxisTitle("Population")
@@ -53,7 +54,7 @@ public class ChartProvider implements ChartPlotter {
 
         chart.getStyler().setDatePattern("dd-MM-yyyy");
         chart.getStyler().setXAxisLabelRotation(45);
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setChartTitleVisible(true);
         chart.getStyler().setAxisTitlesVisible(true);
         chart.getStyler().setLegendVisible(true);
@@ -63,7 +64,6 @@ public class ChartProvider implements ChartPlotter {
         chart.addSeries("Broca", dates, hostPopulation).setMarker(SeriesMarkers.NONE);
         chart.addSeries("Broca infectada", dates, infectedPopulation).setMarker(SeriesMarkers.NONE);
         chart.addSeries("Parasitoid", dates, parasitoidPopulation).setMarker(SeriesMarkers.NONE);
-
 
         String filePath = "./output/dinamica_populacional.png";
         try {

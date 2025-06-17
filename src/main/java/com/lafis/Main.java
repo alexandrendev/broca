@@ -4,6 +4,7 @@ import com.lafis.controller.SimulationController;
 import com.lafis.core.entity.population.PopulationData;
 import com.lafis.core.usecase.PlotChartUseCase;
 import com.lafis.core.usecase.RunSimulationUseCase;
+import com.lafis.infra.AnalyticModel;
 import com.lafis.infra.BetaProvider;
 import com.lafis.infra.EquationFactory;
 import com.lafis.infra.Equilibrium;
@@ -13,12 +14,11 @@ import com.lafis.infra.repository.DailySimulationDataCsvRepository;
 import com.lafis.infra.temperature.DailyTemperatureProvider;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        PopulationData data = new PopulationData(3000, 600, 3000);
-        RandomProvider randomProvider = new RandomProvider(new Random());
+        PopulationData data = new PopulationData(800, 60, 2500);
+        RandomProvider randomProvider = new RandomProvider();
         DailySimulationDataCsvRepository repository;
         BetaProvider betaProvider = new BetaProvider();
 
@@ -30,8 +30,9 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        EquationFactory factory = new EquationFactory();
         RunSimulationUseCase runSimulationUseCase = new RunSimulationUseCase(
-                EquationFactory.create(Equilibrium.THIRD),
+                factory.create(AnalyticModel.RAFIKOV, Equilibrium.THIRD),
                 randomProvider,
                 repository,
                 betaProvider

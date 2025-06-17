@@ -16,4 +16,12 @@ public class Interval {
     public Effect getEffect() {
         return effect;
     }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
 }

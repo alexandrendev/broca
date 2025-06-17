@@ -12,4 +12,6 @@ public interface Equation {
     List<Interval> getThirdLineIntervals(PopulationData data);
 
     double getBeta();
+
+    void setBeta(double beta);
 }
